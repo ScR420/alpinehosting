@@ -27,10 +27,9 @@ export function KontaktForm() {
         <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div className="space-y-4">
             {[
-              { icon: Mail, label: "E-Mail", value: "support@alpinehosting.eu" },
+              { icon: Mail, label: "E-Mail", value: "support@alpinehosting.ch" },
               { icon: Phone, label: "Telefon", value: "+41 44 000 00 00" },
               { icon: MapPin, label: "Adresse", value: "Bahnhofstrasse 1, 8001 Zürich" },
-              { icon: MessageSquare, label: "Live-Chat", value: "Werktags 08–20 Uhr" },
             ].map(({ icon: Icon, label, value }) => (
               <Card key={label} className="reveal flex items-center gap-4 p-5">
                 <div className="grid h-11 w-11 place-items-center rounded-lg bg-primary/5 text-primary">
