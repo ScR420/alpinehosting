@@ -48,16 +48,25 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold">Kontakt</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>support@alpinehosting.eu</li>
-            <li>+41 44 000 00 00</li>
+            <li>support@alpinehosting.ch</li>
             <li>Zürich, Schweiz</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border/60">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-muted-foreground md:flex-row">
-          <span>© {new Date().getFullYear()} AlpineHosting AG. Alle Rechte vorbehalten.</span>
-          <span>Impressum · Datenschutz · AGB</span>
+          <span>© {new Date().getFullYear()} AlpineHosting - Alle Rechte vorbehalten.</span>
+          <div className="flex gap-4">
+            <Link href="/impressum" className="hover:text-foreground transition-colors">
+              Impressum
+            </Link>
+            <Link href="/datenschutz" className="hover:text-foreground transition-colors">
+              Datenschutz
+            </Link>
+            <Link href="/agb" className="hover:text-foreground transition-colors">
+              AGB
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
