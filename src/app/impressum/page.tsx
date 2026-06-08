@@ -38,27 +38,22 @@ export default function ImpressumPage() {
             </div>
 
             <div>
-              <h2 className="text-base font-semibold text-foreground mb-3">
-                Haftungsausschluss
-              </h2>
+              <h2 className="text-base font-semibold text-foreground mb-3">Haftungsausschluss</h2>
 
               <p>
-                Alle Inhalte dieser Website wurden mit grösster Sorgfalt
-                erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität
-                der Inhalte übernehmen wir jedoch keine Gewähr.
+                Alle Inhalte dieser Website wurden mit grösster Sorgfalt erstellt. Für die
+                Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine
+                Gewähr.
               </p>
             </div>
 
             <div>
-              <h2 className="text-base font-semibold text-foreground mb-3">
-                Urheberrecht
-              </h2>
+              <h2 className="text-base font-semibold text-foreground mb-3">Urheberrecht</h2>
 
               <p>
-                Die auf dieser Website veröffentlichten Inhalte und Werke
-                unterliegen dem schweizerischen Urheberrecht. Die
-                Vervielfältigung, Bearbeitung oder Verbreitung ist ohne
-                schriftliche Zustimmung nicht gestattet.
+                Die auf dieser Website veröffentlichten Inhalte und Werke unterliegen dem
+                schweizerischen Urheberrecht. Die Vervielfältigung, Bearbeitung oder Verbreitung ist
+                ohne schriftliche Zustimmung nicht gestattet.
               </p>
             </div>
           </div>
@@ -67,5 +62,3 @@ export default function ImpressumPage() {
     </Layout>
   );
 }
-
-

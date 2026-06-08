@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Layout } from "@/components/site/Layout";
+import { HomeHero } from "@/components/home/home-hero";
+import { HomeStats } from "@/components/home/home-stats";
+import { FeatureCard } from "@/components/site/feature-card";
+import { FadeIn } from "@/components/motion/fade-in";
+import { InteractiveCard } from "@/components/motion/interactive-card";
+import { CtaButton } from "@/components/motion/cta-button";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Shield,
   Zap,
@@ -17,6 +22,7 @@ import {
   Star,
 } from "lucide-react";
 import osloTailorLogo from "@/assets/oslotailor.png";
+import heroAlps from "@/assets/hero-alps.jpg";
 
 export const metadata: Metadata = {
   title: "AlpineHosting – Leistungsstarkes Hosting aus den Alpen",
@@ -86,93 +92,23 @@ const testimonials = [
   },
 ];
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80";
-
+/** Server Component – animation via small client islands */
 export default function HomePage() {
   return (
     <Layout>
-      <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            backgroundImage: `linear-gradient(180deg, oklch(0.14 0.025 255 / 0.92) 0%, oklch(0.18 0.03 255 / 0.85) 60%, var(--background) 100%), url(${HERO_IMAGE})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="container-page relative pt-24 pb-32 md:pt-36 md:pb-44">
-          <div className="max-w-3xl reveal">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Hosting ohne Unterbrechungen
-            </span>
-            <h1 className="mt-6 text-4xl font-bold leading-[1.1] text-white md:text-6xl">
-              Leistungsstarkes Hosting <br className="hidden md:block" />
-              aus den Alpen.
-            </h1>
-            <p className="mt-6 max-w-xl text-lg text-white/70">
-              Sicher, schnell, zuverlässig. AlpineHosting bietet professionelle Hosting-Lösungen für
-              Privatkunden und Unternehmen – betrieben in europäischen Rechenzentren.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90"
-              >
-                <Link href="/leistungen">
-                  Pakete ansehen <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href="/kontakt">Kontakt aufnehmen</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-border/60 bg-secondary/40">
-        <div className="container-page grid grid-cols-2 gap-6 py-8 text-center md:grid-cols-4">
-          {[
-            ["25+", "aktive Kunden"],
-            ["99,9 %", "Uptime-Garantie"],
-            ["24/7", "Support"],
-            ["EU", "Rechenzentren"],
-          ].map(([k, v]) => (
-            <div key={v}>
-              <div className="text-2xl font-bold text-foreground">{k}</div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">{v}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <HomeHero image={heroAlps} />
+      <HomeStats />
 
       <section className="container-page py-24">
-        <div className="mx-auto max-w-2xl text-center reveal">
+        <FadeIn className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">Worauf es bei Hosting wirklich ankommt</h2>
           <p className="mt-4 text-muted-foreground">
             Vier Prinzipien, die jede unserer Entscheidungen leiten.
           </p>
-        </div>
+        </FadeIn>
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {values.map(({ icon: Icon, title, desc }) => (
-            <Card
-              key={title}
-              className="reveal p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]"
-            >
-              <div className="grid h-11 w-11 place-items-center rounded-lg bg-primary/5 text-primary">
-                <Icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{desc}</p>
-            </Card>
+          {values.map((v, i) => (
+            <FeatureCard key={v.title} {...v} delay={i * 0.08} />
           ))}
         </div>
       </section>
@@ -180,26 +116,23 @@ export default function HomePage() {
       <section className="bg-secondary/40 py-24">
         <div className="container-page">
           <div className="flex flex-col items-end justify-between gap-6 md:flex-row">
-            <div className="reveal max-w-xl">
+            <FadeIn className="max-w-xl">
               <h2 className="text-3xl font-bold md:text-4xl">Unsere Hosting-Lösungen</h2>
               <p className="mt-4 text-muted-foreground">
                 Vom einfachen Webhosting bis zum dedizierten Server – wir liefern die passende
                 Infrastruktur.
               </p>
-            </div>
-            <Button asChild variant="ghost">
-              <Link href="/leistungen">
-                Alle Leistungen ansehen <ArrowRight className="ml-1 h-4 w-4" />
+            </FadeIn>
+            <Button asChild variant="ghost" className="btn-interactive">
+              <Link href="/preise">
+                Alle Preise ansehen <ArrowRight className="arrow-shift ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {products.map(({ icon: Icon, title, desc, features }) => (
-              <Card
-                key={title}
-                className="reveal flex flex-col p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]"
-              >
-                <div className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-foreground">
+            {products.map(({ icon: Icon, title, desc, features }, i) => (
+              <InteractiveCard key={title} delay={i * 0.1} className="flex flex-col p-7">
+                <div className="icon-hover grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-foreground">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-6 text-xl font-semibold">{title}</h3>
@@ -211,25 +144,25 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </InteractiveCard>
             ))}
           </div>
         </div>
       </section>
 
       <section className="container-page py-24">
-        <div className="mx-auto max-w-2xl text-center reveal">
+        <FadeIn className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">Was unsere Kunden sagen</h2>
           <p className="mt-4 text-muted-foreground">
             Mehr als 500 Unternehmen vertrauen auf AlpineHosting.
           </p>
-        </div>
+        </FadeIn>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
-            <Card key={t.name} className="reveal p-7">
+          {testimonials.map((t, i) => (
+            <InteractiveCard key={t.name} delay={i * 0.1} className="p-7">
               <div className="flex gap-1 text-accent">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star key={j} className="h-4 w-4 fill-current" />
                 ))}
               </div>
               <p className="mt-4 text-sm leading-relaxed">{`„${t.text}"`}</p>
@@ -237,12 +170,11 @@ export default function HomePage() {
                 <div className="text-sm font-semibold">{t.name}</div>
                 <div className="text-xs text-muted-foreground">{t.role}</div>
               </div>
-            </Card>
+            </InteractiveCard>
           ))}
         </div>
 
-        {/* Kundenlogos */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-16 opacity-70">
+        <FadeIn className="mt-16 flex flex-wrap items-center justify-center gap-16 opacity-70">
           <Link
             href="https://oslo-tailor.com/"
             target="_blank"
@@ -256,51 +188,37 @@ export default function HomePage() {
               className="w-auto object-contain"
             />
             <span className="text-sm font-semibold tracking-widest text-muted-foreground">
-      OSLO TAILOR
-    </span>
+              OSLO TAILOR
+            </span>
           </Link>
-          <Link
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 transition-opacity hover:opacity-100"
-          >
-    <span className="text-sm font-semibold tracking-widest text-muted-foreground">
-      MUSTER AG
-    </span>
-          </Link>
-        </div>
+          <span className="text-sm font-semibold tracking-widest text-muted-foreground">
+            MUSTER AG
+          </span>
+        </FadeIn>
       </section>
 
       <section className="container-page pb-24">
-        <div className="reveal overflow-hidden rounded-2xl bg-primary px-8 py-14 text-primary-foreground md:px-14">
-          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
-            <div>
-              <h2 className="text-3xl font-bold md:text-4xl">Bereit für stabiles Hosting?</h2>
-              <p className="mt-3 max-w-xl text-primary-foreground/70">
-                Sprechen Sie mit unserem Team – wir finden gemeinsam die passende Lösung für Ihr
-                Projekt.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90"
-              >
-                <Link href="/kontakt">Kontakt aufnehmen</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href="/leistungen">Pakete ansehen</Link>
-              </Button>
+        <FadeIn>
+          <div className="overflow-hidden rounded-2xl bg-primary px-8 py-14 text-primary-foreground md:px-14">
+            <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+              <div>
+                <h2 className="text-3xl font-bold md:text-4xl">Bereit für stabiles Hosting?</h2>
+                <p className="mt-3 max-w-xl text-primary-foreground/70">
+                  Sprechen Sie mit unserem Team – wir finden gemeinsam die passende Lösung für Ihr
+                  Projekt.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <CtaButton href="/kontakt" showArrow={false}>
+                  Kontakt aufnehmen
+                </CtaButton>
+                <CtaButton href="/preise" variant="outline-light">
+                  Pakete ansehen
+                </CtaButton>
+              </div>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
     </Layout>
   );

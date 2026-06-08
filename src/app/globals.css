@@ -37,6 +37,13 @@
   --shadow-elevated:
     0 4px 12px -2px oklch(0.2 0.04 250 / 0.08), 0 24px 48px -16px oklch(0.2 0.04 250 / 0.16);
   --shadow-glow: 0 0 32px oklch(0.78 0.13 220 / 0.25);
+
+  /* Motion design tokens */
+  --motion-fast: 200ms;
+  --motion-normal: 300ms;
+  --motion-reveal: 500ms;
+  --motion-hero: 550ms;
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
@@ -140,14 +147,127 @@
   }
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+/* ── Hero gradient drift (CSS-only, GPU-friendly) ── */
+@keyframes hero-gradient-shift {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateX(0%) scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: translateX(2%) scale(1.02);
+  }
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+
+.hero-gradient-drift {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.78 0.13 220 / 0.12), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 60%, oklch(0.35 0.08 255 / 0.18), transparent 70%);
+  animation: hero-gradient-shift 18s var(--motion-ease-out) infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Interactive cards (transform + shadow only) ── */
+.card-interactive {
+  transition:
+    transform var(--motion-normal) var(--motion-ease-out),
+    box-shadow var(--motion-normal) var(--motion-ease-out),
+    border-color var(--motion-normal) var(--motion-ease-out);
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.icon-hover {
+  transition: transform var(--motion-normal) var(--motion-ease-out);
+}
+
+.group:hover .icon-hover,
+.card-interactive:hover .icon-hover {
+  transform: scale(1.1);
+}
+
+/* ── Recommended pricing plan pulse (border glow) ── */
+@keyframes pricing-border-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.78 0.13 220 / 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 4px oklch(0.78 0.13 220 / 0.12);
+  }
+}
+
+.pricing-featured {
+  animation: pricing-border-pulse 3s var(--motion-ease-out) infinite;
+}
+
+/* ── CTA button glow (transform + box-shadow) ── */
+.btn-cta {
+  transition:
+    transform var(--motion-normal) var(--motion-ease-out),
+    box-shadow var(--motion-normal) var(--motion-ease-out);
+}
+
+.btn-cta:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-cta:active {
+  transform: scale(0.98);
+}
+
+.btn-interactive {
+  transition:
+    transform var(--motion-fast) var(--motion-ease-out),
+    opacity var(--motion-fast) var(--motion-ease-out);
+}
+
+.btn-interactive:hover {
+  transform: scale(1.02);
+}
+
+.btn-interactive:active {
+  transform: scale(0.98);
+}
+
+.arrow-shift {
+  transition: transform var(--motion-normal) var(--motion-ease-out);
+}
+
+/* ── Form focus glow ── */
+.input-focus-glow:focus-visible {
+  box-shadow: 0 0 0 3px oklch(0.78 0.13 220 / 0.2);
+}
+
+/* ── Accessibility: disable non-essential motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-gradient-drift {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .pricing-featured {
+    animation: none;
+    box-shadow: 0 0 0 2px oklch(0.78 0.13 220 / 0.3);
+  }
+
+  .card-interactive:hover,
+  .btn-cta:hover,
+  .btn-interactive:hover {
+    transform: none;
+  }
 }

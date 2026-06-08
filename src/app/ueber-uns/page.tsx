@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Layout } from "@/components/site/Layout";
+import { FadeIn } from "@/components/motion/fade-in";
+import { InteractiveCard } from "@/components/motion/interactive-card";
+import { FeatureCard } from "@/components/site/feature-card";
+import { teamMembers } from "@/data/team";
 import { Card } from "@/components/ui/card";
 import { Shield, Zap, Activity, Headphones, MapPin } from "lucide-react";
 
@@ -9,7 +13,7 @@ export const metadata: Metadata = {
     "AlpineHosting steht für Performance, Sicherheit und persönlichen Support – mit Wurzeln im Herzen der Alpen.",
   openGraph: {
     title: "Über AlpineHosting",
-    description: "Unsere Werte: Sicherheit, Geschwindigkeit, Stabilität und Support.",
+    description: "Unsere Werte, Geschichte und das Team hinter Ihrer Infrastruktur.",
   },
 };
 
@@ -36,14 +40,13 @@ const values = [
   },
 ];
 
+/** Server Component – Team integriert unter #team */
 export default function UeberUnsPage() {
   return (
     <Layout>
       <section className="container-page py-20 md:py-28">
-        <div className="max-w-3xl reveal">
-          <span className="text-sm font-medium uppercase tracking-widest text-accent">
-            Über uns
-          </span>
+        <FadeIn className="max-w-3xl">
+          <span className="text-sm font-medium uppercase tracking-widest text-accent">Über uns</span>
           <h1 className="mt-3 text-4xl font-bold md:text-5xl">
             Hosting mit Haltung – aus dem Herzen Europas.
           </h1>
@@ -52,10 +55,10 @@ export default function UeberUnsPage() {
             Hosting-Lösungen anzubieten. Wir verbinden technische Exzellenz mit der Verlässlichkeit
             und Sorgfalt, für die unsere Region seit Jahrhunderten steht.
           </p>
-        </div>
+        </FadeIn>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 md:items-center">
-          <div className="reveal">
+          <FadeIn>
             <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
               <MapPin className="h-3.5 w-3.5" /> Zürich · Schweiz
             </div>
@@ -70,45 +73,69 @@ export default function UeberUnsPage() {
               europäischen Datenschutzstandards betrieben. Daten unserer Kunden bleiben dort, wo sie
               hingehören: in Europa.
             </p>
-          </div>
-          <Card className="reveal p-8">
-            <div className="grid grid-cols-2 gap-6">
-              {[
-                ["2018", "Gegründet"],
-                ["500+", "Aktive Kunden"],
-                ["12", "Mitarbeitende"],
-                ["3", "Rechenzentren"],
-              ].map(([k, v]) => (
-                <div key={v}>
-                  <div className="text-3xl font-bold text-primary">{k}</div>
-                  <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
-                    {v}
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <Card className="card-interactive p-8">
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  ["2018", "Gegründet"],
+                  ["500+", "Aktive Kunden"],
+                  ["12", "Mitarbeitende"],
+                  ["3", "Rechenzentren"],
+                ].map(([k, v]) => (
+                  <div key={v}>
+                    <div className="text-3xl font-bold text-primary">{k}</div>
+                    <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+                      {v}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </Card>
+                ))}
+              </div>
+            </Card>
+          </FadeIn>
         </div>
 
         <div className="mt-24">
-          <div className="max-w-xl reveal">
+          <FadeIn className="max-w-xl">
             <h2 className="text-3xl font-bold md:text-4xl">Unsere Werte</h2>
             <p className="mt-3 text-muted-foreground">
               Vier Prinzipien, die unser tägliches Handeln bestimmen.
             </p>
-          </div>
+          </FadeIn>
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {values.map(({ icon: Icon, title, desc }) => (
-              <Card
-                key={title}
-                className="reveal p-6 transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="grid h-11 w-11 place-items-center rounded-lg bg-primary/5 text-primary">
-                  <Icon className="h-5 w-5" />
+            {values.map((v, i) => (
+              <FeatureCard key={v.title} {...v} delay={i * 0.08} />
+            ))}
+          </div>
+        </div>
+
+        {/* Team – ehemals /team */}
+        <div id="team" className="mt-24 scroll-mt-24">
+          <FadeIn className="max-w-3xl">
+            <span className="text-sm font-medium uppercase tracking-widest text-accent">Team</span>
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+              Menschen, die hinter Ihrer Infrastruktur stehen.
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Ein kleines, eingespieltes Team aus erfahrenen Spezialisten – persönlich erreichbar und
+              mit Leidenschaft für stabile Systeme.
+            </p>
+          </FadeIn>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {teamMembers.map((m, i) => (
+              <InteractiveCard key={m.name} delay={i * 0.08} className="p-6 text-center">
+                <div
+                  className="mx-auto grid h-20 w-20 place-items-center rounded-full text-xl font-semibold text-primary-foreground"
+                  style={{
+                    background: "linear-gradient(135deg, var(--primary), oklch(0.35 0.06 255))",
+                  }}
+                >
+                  {m.initials}
                 </div>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{desc}</p>
-              </Card>
+                <h3 className="mt-5 text-lg font-semibold">{m.name}</h3>
+                <div className="text-xs uppercase tracking-wider text-accent">{m.role}</div>
+                <p className="mt-3 text-sm text-muted-foreground">{m.bio}</p>
+              </InteractiveCard>
             ))}
           </div>
         </div>

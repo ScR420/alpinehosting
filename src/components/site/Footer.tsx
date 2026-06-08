@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mountain } from "lucide-react";
 
+/** Server Component */
 export function Footer() {
   return (
     <footer className="border-t border-border/60 bg-secondary/40">
@@ -17,29 +18,40 @@ export function Footer() {
           </p>
         </div>
         <div>
-          <h4 className="text-sm font-semibold">Leistungen</h4>
+          <h4 className="text-sm font-semibold">Preise</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>Webhosting</li>
-            <li>VPS-Server</li>
-            <li>Dedicated Server</li>
-            <li>Domains</li>
+            <li>
+              <Link href="/preise" className="hover:text-foreground transition-colors">
+                Starter
+              </Link>
+            </li>
+            <li>
+              <Link href="/preise" className="hover:text-foreground transition-colors">
+                Business
+              </Link>
+            </li>
+            <li>
+              <Link href="/preise" className="hover:text-foreground transition-colors">
+                Enterprise
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
           <h4 className="text-sm font-semibold">Unternehmen</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <Link href="/ueber-uns" className="hover:text-foreground">
+              <Link href="/ueber-uns" className="hover:text-foreground transition-colors">
                 Über uns
               </Link>
             </li>
             <li>
-              <Link href="/team" className="hover:text-foreground">
-                Team
+              <Link href="/projekte" className="hover:text-foreground transition-colors">
+                Projekte
               </Link>
             </li>
             <li>
-              <Link href="/kontakt" className="hover:text-foreground">
+              <Link href="/kontakt" className="hover:text-foreground transition-colors">
                 Kontakt
               </Link>
             </li>
