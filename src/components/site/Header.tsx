@@ -62,10 +62,16 @@ export function Header() {
     >
       <div className="container-page flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
+          <span className={cn(
+            "grid h-8 w-8 place-items-center rounded-md text-primary-foreground",
+            showSolidNav ? "bg-primary" : "bg-primary/90"
+          )}>
             <Mountain className="h-4 w-4" />
           </span>
-          <span className={cn(!showSolidNav && isHome && "text-white")}>AlpineHosting</span>
+          <span className={cn(
+            "transition-colors",
+            !showSolidNav && isHome ? "text-foreground" : ""
+          )}>AlpineHosting</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -77,13 +83,11 @@ export function Header() {
                 href={n.href}
                 className={cn(
                   "relative text-sm transition-colors",
-                  !showSolidNav && isHome ? "text-white/70 hover:text-white" : "hover:text-foreground",
+                  !showSolidNav && isHome ? "text-foreground/80 hover:text-foreground" : "hover:text-foreground",
                   active
-                    ? !showSolidNav && isHome
-                      ? "text-white"
-                      : "text-foreground"
+                    ? "text-foreground font-medium"
                     : !showSolidNav && isHome
-                      ? "text-white/70"
+                      ? "text-foreground/60"
                       : "text-muted-foreground",
                 )}
               >
@@ -106,7 +110,10 @@ export function Header() {
           type="button"
           aria-label={open ? "Menü schliessen" : "Menü öffnen"}
           aria-expanded={open}
-          className={cn("md:hidden", !showSolidNav && isHome && "text-white")}
+          className={cn(
+            "md:hidden transition-colors",
+            !showSolidNav && isHome ? "text-foreground" : ""
+          )}
           onClick={() => setOpen((o) => !o)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
